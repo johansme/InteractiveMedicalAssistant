@@ -79,7 +79,8 @@ public class InteractiveMedicalAssistant {
 				}
 				
 				PrimitiveValue pvl = clips.eval("(list-deffacts)");
-				//JOptionPane.showMessageDialog(frmCompsciInteractiveMedical,pvl.toString());
+			
+				JOptionPane.showMessageDialog(frmCompsciInteractiveMedical,pvl);
 				clips.eval("(list-defrules)");
 				
 				clips.run();

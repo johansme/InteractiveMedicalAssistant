@@ -9,11 +9,15 @@ import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.awt.event.ActionEvent;
 import net.sf.clipsrules.jni.*;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.TextArea;
 
 
 public class InteractiveMedicalAssistant {
 
 	private JFrame frmCompsciInteractiveMedical;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -44,7 +48,7 @@ public class InteractiveMedicalAssistant {
 	private void initialize() {
 		frmCompsciInteractiveMedical = new JFrame();
 		frmCompsciInteractiveMedical.setTitle("COMPSCI765: Interactive Medical Assistant");
-		frmCompsciInteractiveMedical.setBounds(100, 100, 450, 300);
+		frmCompsciInteractiveMedical.setBounds(100, 100, 765, 365);
 		frmCompsciInteractiveMedical.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCompsciInteractiveMedical.getContentPane().setLayout(null);
 		
@@ -54,48 +58,49 @@ public class InteractiveMedicalAssistant {
 		flowLayout.setAlignOnBaseline(true);
 		frmCompsciInteractiveMedical.getContentPane().add(panel);
 		
-		JButton btnNewButton = new JButton("Run");
+		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Run!");
-				//************************TESTBLOCK*************************//
-				// CLIPSJNI.dll must be in system32 or OS equivalent
-				Environment clips = new Environment();
-				
-				//clips.loadFromResource("/jni/kbs/bcengine.cpl");
-				
-				clips.loadFromResource("/kbs/test.clp");
-				//clips.reset();
-				
-				try{
-					
-				    //InputStream input = getClass().getResourceAsStream("/kbs/animal.clp");
-				    //JOptionPane.showMessageDialog(frmCompsciInteractiveMedical,input.available());
-				
-				}
-				catch(Exception e)
-				{
-					//JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, e.toString());
-				}
-				
-				PrimitiveValue pvl = clips.eval("(list-deffacts)");
-			
-				JOptionPane.showMessageDialog(frmCompsciInteractiveMedical,pvl);
-				clips.eval("(list-defrules)");
-				
-				clips.run();
-				
-				//clips.reset();
-				//clips.run();
-				//clips.destroy();
-				
-				//clips.eval();
 				
 				
-				//************************TESTBLOCK*************************//
+				
+				
+		}
+		});
+		btnNewButton.setBounds(309, 239, 129, 44);
+		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Exit");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
 			}
 		});
-		btnNewButton.setBounds(175, 192, 89, 23);
-		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton);
+		btnNewButton_1.setBounds(650, 292, 89, 23);
+		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_1);
+		
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(104, 44, 547, 122);
+		frmCompsciInteractiveMedical.getContentPane().add(textArea);
+		
+		textField = new JTextField();
+		textField.setBounds(104, 195, 547, 20);
+		frmCompsciInteractiveMedical.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblResponse = new JLabel("Response:");
+		lblResponse.setBounds(38, 198, 60, 14);
+		frmCompsciInteractiveMedical.getContentPane().add(lblResponse);
+		
+		JButton btnNewButton_2 = new JButton("Clear");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+				textField.setText("");
+			}
+		});
+		btnNewButton_2.setBounds(551, 292, 89, 23);
+		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_2);
 	}
 }

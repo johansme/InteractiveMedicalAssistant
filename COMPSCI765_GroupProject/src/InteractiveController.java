@@ -1,13 +1,26 @@
-import net.sf.clipsrules.jni.Environment;
-import net.sf.clipsrules.jni.PrimitiveValue;
-
 public class InteractiveController {
+	private String state;
+	
+	public InteractiveController()
+	{
+		this.state="init";
+	}
+	public void setstate(String State)
+	{
+		this.state = State;
+	}
+	public String getstate()
+	{
+		return this.state;
+	}
 	
 	public String interactive_action(String response)
 	{
-
-		return "";
-	
+		if(this.state.equals("init"))
+		{
+			return "What is the Initial Question to be Asked?";
+		}
+		return this.state;
 	}
 }
 

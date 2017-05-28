@@ -18,7 +18,9 @@ public class InteractiveMedicalAssistant {
 
 	private JFrame frmCompsciInteractiveMedical;
 	private JTextField textField;
-
+	private InteractiveController IC = new InteractiveController();
+	TextArea textArea = new TextArea();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,13 +60,22 @@ public class InteractiveMedicalAssistant {
 		flowLayout.setAlignOnBaseline(true);
 		frmCompsciInteractiveMedical.getContentPane().add(panel);
 		
+		// IC state is init
+		textArea.setText(IC.interactive_action(""));
+		
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-				
-				
+			if(IC.getstate().equals("question"))
+			{
+				textArea.setText(IC.interactive_action(textField.getText()));
+			}
+			else if(true)
+			{
+				textArea.setText(IC.interactive_action(textField.getText()));
+				btnNewButton.setEnabled(false);
+			}
 		}
 		});
 		btnNewButton.setBounds(309, 239, 129, 44);
@@ -79,7 +90,7 @@ public class InteractiveMedicalAssistant {
 		btnNewButton_1.setBounds(650, 292, 89, 23);
 		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_1);
 		
-		TextArea textArea = new TextArea();
+		
 		textArea.setEditable(false);
 		textArea.setBounds(104, 44, 547, 122);
 		frmCompsciInteractiveMedical.getContentPane().add(textArea);
@@ -98,6 +109,7 @@ public class InteractiveMedicalAssistant {
 			public void actionPerformed(ActionEvent e) {
 				textArea.setText("");
 				textField.setText("");
+				btnNewButton.setEnabled(true);
 			}
 		});
 		btnNewButton_2.setBounds(551, 292, 89, 23);

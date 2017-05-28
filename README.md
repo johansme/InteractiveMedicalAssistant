@@ -1,5 +1,7 @@
 # InteractiveMedicalAssistant
 
+Current Executable is located here : COMPSCI765_GroupProject\jar\InteractiveMedicalAssistant.jar
+
 Init.
 
 1. Java

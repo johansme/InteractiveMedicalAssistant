@@ -93,6 +93,7 @@ public class InteractiveMedicalAssistant {
 
 			            }
 			            
+			            List<String> symptom_one = new ArrayList<String>();
 			            
 			            String[] line_split;
 			            String clips_rule="";
@@ -109,6 +110,16 @@ public class InteractiveMedicalAssistant {
 			            	
 			            	symptoms = temp.substring(temp.indexOf(" ")+1, temp.length());
 			            	
+			            	line_split=symptoms.split(" ");
+			            	
+			            	for(String each_sym : line_split)
+			            	{
+			            		if(!(symptom_one.contains(each_sym)))
+			            		{
+			            			symptom_one.add(each_sym);
+			            		}
+			            	}
+			            	
 			            	symptoms=symptoms.replaceAll(" ", "\" \"");
 			            	
 			            	clips_rule+="(printout t "+symptoms+" crlf))\n";
@@ -122,7 +133,31 @@ public class InteractiveMedicalAssistant {
 			                
 			            }
 			            
-		            	
+			            clips_rule="";
+			            String disease_list = "";
+			            
+			            for(String each_symptom : symptom_one)
+			            {
+				            for(String each_data: data)
+				            {
+				            	if(each_data.contains(each_symptom))
+				            	{
+				            		disease_list+=each_data.substring(0, each_data.indexOf(" "))+"\" \"";
+				            	}
+				            }
+				            
+			            	clips_rule="(defrule "+each_symptom+" \n";
+			            	clips_rule+="(symptom-is "+each_symptom+")\n";
+			            	clips_rule+="=>\n";
+			            	
+			            	clips_rule+="(printout t "+disease_list+" crlf))\n";
+			            	
+			            	System.out.println(clips_rule);
+			            	
+			            	clips_rule="";
+			            	disease_list="";
+			            }
+			            
 		            }
 		            catch (Exception excep)
 		            {

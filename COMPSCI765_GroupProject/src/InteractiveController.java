@@ -106,7 +106,9 @@ public class InteractiveController {
 		PrimitiveValue pvl = clips.eval("(list-deffacts)");		
 		clips.eval("(list-defrules)");
 		clips.eval("(list-deffacts)");
-		clips.eval("(assert (disease-is n1))");
+		clips.eval("(assert (disease-is cold))");
+		clips.eval("(run)");
+		clips.eval("(assert (symptom-is fever))");
 		clips.eval("(run)");
 		
 		//clips.run();

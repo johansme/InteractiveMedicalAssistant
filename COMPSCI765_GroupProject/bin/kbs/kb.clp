@@ -1,29 +1,29 @@
-(defrule n 
-(disease-is n)
+(defrule flu 
+(disease-is flu)
 =>
-(printout t s1" "s2" "s3 crlf))
+(printout t cough" "sneeze" "fever crlf))
 
-(defrule n1 
-(disease-is n1)
+(defrule cold 
+(disease-is cold)
 =>
-(printout t s4" "s5" "s6 crlf))
+(printout t cough" "nose" "fever crlf))
 
-(defrule n2 
-(disease-is n2)
+(defrule cough 
+(symptom-is cough)
 =>
-(printout t s7" "s8" "s9 crlf))
+(printout t flu" "cold" " crlf))
 
-(defrule n3 
-(disease-is n3)
+(defrule sneeze 
+(symptom-is sneeze)
 =>
-(printout t s1" "s2" "s3 crlf))
+(printout t flu" " crlf))
 
-(defrule n4 
-(disease-is n4)
+(defrule fever 
+(symptom-is fever)
 =>
-(printout t s2" "s3 crlf))
+(printout t flu" "cold" " crlf))
 
-(defrule n 
-(disease-is n)
+(defrule nose 
+(symptom-is nose)
 =>
-(printout t s1" "s2 crlf))
+(printout t cold" " crlf))

@@ -67,11 +67,11 @@ public class InteractiveMedicalAssistant {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			if(IC.getstate().equals("question"))
+			if(IC.getState().equals("question"))
 			{
 				textArea.setText(IC.interactive_action(textField.getText()));
 			}
-			else if(true)
+			else if(IC.getState().equals("advise"))
 			{
 				textArea.setText(IC.interactive_action(textField.getText()));
 				btnNewButton.setEnabled(false);
@@ -87,9 +87,9 @@ public class InteractiveMedicalAssistant {
 				System.exit(0);
 			}
 		});
+		
 		btnNewButton_1.setBounds(650, 292, 89, 23);
 		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_1);
-		
 		
 		textArea.setEditable(false);
 		textArea.setBounds(104, 44, 547, 122);

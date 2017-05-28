@@ -1,5 +1,6 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,9 +16,9 @@ public class InteractiveController {
 	
 	//Model of user
 	
-	private String age;
+	private int age;
 	private String gender;
-	private String symptom;
+	private List<String> symptom;
 	private String diagnose;
 	
 	public List<String> getKnowledge() {
@@ -31,6 +32,10 @@ public class InteractiveController {
 	public InteractiveController()
 	{
 		this.state="init";
+		this.age = 0;
+		this.gender = "";
+		this.diagnose = "";
+		this.symptom = new ArrayList<String>();
 	}
 	
 	public String getState() {
@@ -39,10 +44,10 @@ public class InteractiveController {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 	public String getGender() {
@@ -51,10 +56,10 @@ public class InteractiveController {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getSymptom() {
+	public List<String> getSymptom() {
 		return symptom;
 	}
-	public void setSymptom(String symptom) {
+	public void setSymptom(List<String> symptom) {
 		this.symptom = symptom;
 	}
 	public String getDiagnose() {
@@ -72,13 +77,12 @@ public class InteractiveController {
 			this.state = "question";
 			//response value is blank from UI
 			clips_interface();
-			return "What is the Initial Question to be Asked?";
+			return "What symptom do you have?";
 		}
 		if(this.state.equals("question"))
 		{
 			//as state is question, expecting a response to the most recent question asked
 			return(update_evaluate_model(response));
-			
 		}
 		return this.state;
 	}
@@ -87,78 +91,106 @@ public class InteractiveController {
 		// This method updates the existing model with the response
 		// evaluates whether the model is complete
 		// interfaces with clips to obtain facts
+		List<String> disease = new ArrayList<String>();
 		
-		if(true)
+		boolean found = false;
+		for(String str : this.knowledge)
 		{
-			
+			if(str.contains(response_update))
+			{
+				if(!(str.substring(0, str.indexOf(" "))).equals(response_update))
+				{
+					disease.add(str.substring(0, str.indexOf(" ")));	
+					found = true;
+				}
+			}
 		}
 		
-		return response_update;
+		if(found)
+		{
+			found = false;
+			//find the most common symptoms in the list of diseases found
+			//use this to filter list
+			//iterate through model to eliminate diseases
+			//ask question to refine model
+			
+			//if found, its a valid symptom hence its added to user model
+			(this.getSymptom()).add(response_update);
+			//symptom added to model
+			int count = 0;
+			List<String> current_symptom = new ArrayList<String>();
+			
+			for(String st : this.knowledge)
+			{
+				for(String each_st : this.getSymptom())
+				{
+					if(st.contains(each_st))
+					{
+						if(!(current_symptom.contains(each_st)))
+						{
+							current_symptom.add(each_st);
+						}
+						count++;
+					}
+				}
+				String [] total = (st.substring(st.indexOf(" ")+1, st.length())).split(" ");
+
+				if(total.length==count)
+				{
+					return "Match Found ! " + st;
+				}
+				count = 0;
+			}
+
+			
+			//evaluate model to see if it is completed
+
+			//ask question to refine model
+			String send_symptoms="";
+			for(String str1 : current_symptom)
+			{
+				send_symptoms+=str1+" ";
+			}
+			return "Symptom found, we currently have : " + send_symptoms;
+			
+		}
+		else
+		{
+			return "Unfortunately the symptom was not found, please try again . . .";
+		}
 	}
 	public String clips_interface()
 	{
 		
-		//************************TESTBLOCK***************
-		// CLIPSJNI.dll must be in system32 or OS equivalent
-		Environment clips = new Environment();
+		//CLIPSJNI.dll must be in system32 or OS equivalent
+		//Environment clips = new Environment();
+		//clips.loadFromResource("/kbs/kb.clp");
 		//clips.reset();
-
-		
-		clips.loadFromResource("/kbs/kb.clp");
-
-		clips.reset();
-
-		clips.run();
-		
+		//clips.run();
 		//clips.assertString("(myTemp (one asd) (second jhg))");
 	    //clips.assertString("(myTemp (one bvc) (second kjh))");
-		
-		String evalStr = "(find-all-facts ((?f state-list)) TRUE)";
+		//String evalStr = "(find-all-facts ((?f state-list)) TRUE)";
 		//String currentID = clips.eval(evalStr).get(0).getFactSlot("current").toString();
-		
-		
-		
 	    //clips.run();
-	    
 	    //clips.assertString("(animal-is duck)");
 		//clips.assertString("(facts)");
-		
 		//MultifieldValue mv = (MultifieldValue) clips.eval("()");
-		
 		//PrimitiveValue pvl = clips.eval("(facts)");
 		//System.out.println(pvl.toString()+"-");
-		
 		//String evalStr = "(find-fact ((?f myTemp)) (eq ?p:one bvc))";
-	      
-		//MultifieldValue mv = (MultifieldValue) clips.eval("(run)");
-
-
-		
+        //MultifieldValue mv = (MultifieldValue) clips.eval("(run)");
 		//clips.eval("(facts)");
 		//clips.eval("(list-deffacts)");
 		//clips.eval("(find-fact)");
 		//clips.eval("(run)");
 		//clips.eval("(assert (symptom-is fever))");
 		//clips.assertString("(symptom-is fever)");
-		
 		//clips.eval("(run)");
-		
-		
-		
-
-		
-
-				
-		return " ";
-		
-
-		//clips.reset();
+        //clips.reset();
 		//clips.run();
 		//clips.destroy();
-
-		//clips.eval();
-
-		//**********************TESTBLOCK*************************/		
+        //clips.eval();
+		return " ";
 	}
 }
 

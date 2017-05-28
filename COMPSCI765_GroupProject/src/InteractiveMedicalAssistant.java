@@ -244,6 +244,7 @@ public class InteractiveMedicalAssistant {
 				textArea.setText("");
 				textField.setText("");
 				btnNewButton.setEnabled(true);
+				
 			}
 		});
 		btnNewButton_2.setBounds(551, 292, 89, 23);

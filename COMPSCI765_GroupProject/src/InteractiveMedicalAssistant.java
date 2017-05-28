@@ -3,15 +3,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import net.sf.clipsrules.jni.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.TextArea;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class InteractiveMedicalAssistant {
@@ -49,16 +59,48 @@ public class InteractiveMedicalAssistant {
 	 */
 	private void initialize() {
 		frmCompsciInteractiveMedical = new JFrame();
+		frmCompsciInteractiveMedical.getContentPane().addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			    //fileChooser.setCurrentDirectory(new File("X:\\"));
+			    //fileChooser.setSelectedFile(new File("README.html"));
+			    int result = fileChooser.showOpenDialog(null);
+			    if (result == JFileChooser.APPROVE_OPTION)
+		        {
+		            String filename = fileChooser.getSelectedFile().getPath();
+		            JOptionPane.showMessageDialog(null, "Reading: " + filename);
+		            
+		            List<String> data = new ArrayList<String>();
+		            
+		            try
+		            {
+			            FileReader read = new FileReader(filename);
+			            BufferedReader bf = new BufferedReader(read);
+			            String line="";
+			            while((line = bf.readLine())!=null)
+			            {
+			            	data.add(line);
+			            }
+			            bf.close();
+			            
+			            for(String temp : data)
+			            {
+			            	System.out.println(temp);
+			            }
+		            	
+		            }
+		            catch (Exception excep)
+		            {
+
+		            }
+		        }
+			}
+		});
 		frmCompsciInteractiveMedical.setTitle("COMPSCI765: Interactive Medical Assistant");
 		frmCompsciInteractiveMedical.setBounds(100, 100, 765, 365);
 		frmCompsciInteractiveMedical.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCompsciInteractiveMedical.getContentPane().setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 10, 261);
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignOnBaseline(true);
-		frmCompsciInteractiveMedical.getContentPane().add(panel);
 		
 		// IC state is init
 		textArea.setText(IC.interactive_action(""));

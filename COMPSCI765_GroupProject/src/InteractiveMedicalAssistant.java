@@ -86,12 +86,7 @@ public class InteractiveMedicalAssistant {
 			            
 			            try{
 			                PrintWriter writer = new PrintWriter("kbs.clp", "UTF-8");
-			                writer.println("The first line");
-			                writer.println("The second line");
-			                writer.close();
-			            } catch (Exception excepx) {
-
-			            }
+			               
 			            
 			            List<String> symptom_one = new ArrayList<String>();
 			            
@@ -124,7 +119,7 @@ public class InteractiveMedicalAssistant {
 			            	
 			            	clips_rule+="(printout t "+symptoms+" crlf))\n";
 
-			                System.out.println(clips_rule);
+				            writer.println(clips_rule);
 
 			            	clips_rule="";
 			            	symptoms="";
@@ -152,11 +147,19 @@ public class InteractiveMedicalAssistant {
 			            	
 			            	clips_rule+="(printout t "+disease_list+" crlf))\n";
 			            	
-			            	System.out.println(clips_rule);
-			            	
+				            writer.println(clips_rule);
+				            
 			            	clips_rule="";
 			            	disease_list="";
 			            }
+			            
+
+
+		                writer.close();
+		            } catch (Exception excepx) {
+
+		            }
+			            
 			            
 		            }
 		            catch (Exception excep)

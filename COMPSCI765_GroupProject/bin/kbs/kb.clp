@@ -1,13 +1,29 @@
-(deftemplate disease "three symptom disease"
-	(slot symptom1)
-	(slot symptom2)
-	(slot symptom3))
-	
-(deffacts initial-facts "initial facts"
-	(disease(symptom1 cough)(symptom2 sneeze)(symptom3 fever))
-	(disease(symptom1 cough)(symptom2 nose)(symptom3 fever)))
-	
-(defrule getdiag "flu"
-	(disease(symptom1 cough)(symptom2 sneeze)(symptom3 fever))
+(defrule n 
+(disease-is n)
 =>
-	(printout t "Flu" crlf))
+(printout t s1" "s2" "s3 crlf))
+
+(defrule n1 
+(disease-is n1)
+=>
+(printout t s4" "s5" "s6 crlf))
+
+(defrule n2 
+(disease-is n2)
+=>
+(printout t s7" "s8" "s9 crlf))
+
+(defrule n3 
+(disease-is n3)
+=>
+(printout t s1" "s2" "s3 crlf))
+
+(defrule n4 
+(disease-is n4)
+=>
+(printout t s2" "s3 crlf))
+
+(defrule n 
+(disease-is n)
+=>
+(printout t s1" "s2 crlf))

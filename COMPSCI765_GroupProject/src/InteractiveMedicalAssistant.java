@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -69,8 +70,6 @@ public class InteractiveMedicalAssistant {
 			    if (result == JFileChooser.APPROVE_OPTION)
 		        {
 		            String filename = fileChooser.getSelectedFile().getPath();
-		            JOptionPane.showMessageDialog(null, "Reading: " + filename);
-		            
 		            List<String> data = new ArrayList<String>();
 		            
 		            try
@@ -84,10 +83,45 @@ public class InteractiveMedicalAssistant {
 			            }
 			            bf.close();
 			            
+			            
+			            try{
+			                PrintWriter writer = new PrintWriter("kbs.clp", "UTF-8");
+			                writer.println("The first line");
+			                writer.println("The second line");
+			                writer.close();
+			            } catch (Exception excepx) {
+
+			            }
+			            
+			            
+			            String[] line_split;
+			            String clips_rule="";
+			            String symptoms="";
+			            String name="";
+			            
 			            for(String temp : data)
 			            {
-			            	System.out.println(temp);
+			            	name = temp.substring(0, temp.indexOf(" "));
+			            	
+			            	clips_rule="(defrule "+name+" \n";
+			            	clips_rule+="(disease-is "+name+")\n";
+			            	clips_rule+="=>\n";
+			            	
+			            	symptoms = temp.substring(temp.indexOf(" ")+1, temp.length());
+			            	
+			            	symptoms=symptoms.replaceAll(" ", "\" \"");
+			            	
+			            	clips_rule+="(printout t "+symptoms+" crlf))\n";
+
+			                System.out.println(clips_rule);
+
+			            	clips_rule="";
+			            	symptoms="";
+			            	name="";
+			                line_split=new String[0];
+			                
 			            }
+			            
 		            	
 		            }
 		            catch (Exception excep)

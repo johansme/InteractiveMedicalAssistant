@@ -1,29 +1,10 @@
-(defrule flu 
-(disease-is flu)
-=>
-(printout t cough" "sneeze" "fever crlf))
+(deftemplate myTemp
+	(slot one)
+	(slot second))
 
-(defrule cold 
-(disease-is cold)
-=>
-(printout t cough" "nose" "fever crlf))
 
-(defrule cough 
-(symptom-is cough)
-=>
-(printout t flu" "cold" " crlf))
-
-(defrule sneeze 
-(symptom-is sneeze)
-=>
-(printout t flu" " crlf))
-
-(defrule fever 
-(symptom-is fever)
-=>
-(printout t flu" "cold" " crlf))
-
-(defrule nose 
-(symptom-is nose)
-=>
-(printout t cold" " crlf))
+(deffacts init
+        (myTemp (one asd) (second jhg))
+        (myTemp (one asd) (second kjh))
+        (myTemp (one bvc) (second jhg))
+        (myTemp (one bvc) (second jhg)))

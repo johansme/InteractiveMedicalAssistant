@@ -1,9 +1,17 @@
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.Locale;
+
+import javax.swing.JOptionPane;
+
 import net.sf.clipsrules.jni.*;
 
 public class InteractiveController {
 	//state values are : init(on system startup), question(when asking question), advice(when advising user of action)
 	
 	private String state;
+	private List<String> knowledge;
 	
 	//Model of user
 	
@@ -11,6 +19,14 @@ public class InteractiveController {
 	private String gender;
 	private String symptom;
 	private String diagnose;
+	
+	public List<String> getKnowledge() {
+		return knowledge;
+	}
+
+	public void setKnowledge(List<String> knowledge) {
+		this.knowledge = knowledge;
+	}
 	
 	public InteractiveController()
 	{
@@ -85,35 +101,56 @@ public class InteractiveController {
 		//************************TESTBLOCK***************
 		// CLIPSJNI.dll must be in system32 or OS equivalent
 		Environment clips = new Environment();
-		clips.reset();
-
-		//clips.loadFromResource("/jni/kbs/bcengine.cpl");
-
-		clips.loadFromResource("/kbs/kb.clp");
 		//clips.reset();
 
-		try{
-			
-		    //InputStream input = getClass().getResourceAsStream("/kbs/animal.clp");
-		    //JOptionPane.showMessageDialog(frmCompsciInteractiveMedical,input.available());
-
-		}
-		catch(Exception e)
-		{
-			//JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, e.toString());
-		}
-
-		PrimitiveValue pvl = clips.eval("(list-deffacts)");		
-		clips.eval("(list-defrules)");
-		clips.eval("(list-deffacts)");
-		clips.eval("(assert (disease-is cold))");
-		clips.eval("(run)");
-		clips.eval("(assert (symptom-is fever))");
-		clips.eval("(run)");
 		
-		//clips.run();
+		clips.loadFromResource("/kbs/kb.clp");
+
+		clips.reset();
+
+		clips.run();
 		
+		//clips.assertString("(myTemp (one asd) (second jhg))");
+	    //clips.assertString("(myTemp (one bvc) (second kjh))");
+		
+		String evalStr = "(find-all-facts ((?f state-list)) TRUE)";
+		//String currentID = clips.eval(evalStr).get(0).getFactSlot("current").toString();
+		
+		
+		
+	    //clips.run();
+	    
+	    //clips.assertString("(animal-is duck)");
+		//clips.assertString("(facts)");
+		
+		//MultifieldValue mv = (MultifieldValue) clips.eval("()");
+		
+		//PrimitiveValue pvl = clips.eval("(facts)");
+		//System.out.println(pvl.toString()+"-");
+		
+		//String evalStr = "(find-fact ((?f myTemp)) (eq ?p:one bvc))";
+	      
+		//MultifieldValue mv = (MultifieldValue) clips.eval("(run)");
+
+
+		
+		//clips.eval("(facts)");
+		//clips.eval("(list-deffacts)");
+		//clips.eval("(find-fact)");
+		//clips.eval("(run)");
+		//clips.eval("(assert (symptom-is fever))");
+		//clips.assertString("(symptom-is fever)");
+		
+		//clips.eval("(run)");
+		
+		
+		
+
+		
+
+				
 		return " ";
+		
 
 		//clips.reset();
 		//clips.run();

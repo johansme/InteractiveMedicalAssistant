@@ -9,8 +9,13 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +36,6 @@ public class InteractiveMedicalAssistant {
 	private JTextField textField;
 	private InteractiveController IC = new InteractiveController();
 	TextArea textArea = new TextArea();
-	
 	/**
 	 * Launch the application.
 	 */
@@ -64,8 +68,6 @@ public class InteractiveMedicalAssistant {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-			    //fileChooser.setCurrentDirectory(new File("X:\\"));
-			    //fileChooser.setSelectedFile(new File("README.html"));
 			    int result = fileChooser.showOpenDialog(null);
 			    if (result == JFileChooser.APPROVE_OPTION)
 		        {
@@ -88,71 +90,71 @@ public class InteractiveMedicalAssistant {
 			                PrintWriter writer = new PrintWriter("kbs.clp", "UTF-8");
 			               
 			            
-			            List<String> symptom_one = new ArrayList<String>();
-			            
-			            String[] line_split;
-			            String clips_rule="";
-			            String symptoms="";
-			            String name="";
-			            
-			            for(String temp : data)
-			            {
-			            	name = temp.substring(0, temp.indexOf(" "));
-			            	
-			            	clips_rule="(defrule "+name+" \n";
-			            	clips_rule+="(disease-is "+name+")\n";
-			            	clips_rule+="=>\n";
-			            	
-			            	symptoms = temp.substring(temp.indexOf(" ")+1, temp.length());
-			            	
-			            	line_split=symptoms.split(" ");
-			            	
-			            	for(String each_sym : line_split)
-			            	{
-			            		if(!(symptom_one.contains(each_sym)))
-			            		{
-			            			symptom_one.add(each_sym);
-			            		}
-			            	}
-			            	
-			            	symptoms=symptoms.replaceAll(" ", "\" \"");
-			            	
-			            	clips_rule+="(printout t "+symptoms+" crlf))\n";
-
-				            writer.println(clips_rule);
-
-			            	clips_rule="";
-			            	symptoms="";
-			            	name="";
-			                line_split=new String[0];
-			                
-			            }
-			            
-			            clips_rule="";
-			            String disease_list = "";
-			            
-			            for(String each_symptom : symptom_one)
-			            {
-				            for(String each_data: data)
+				            List<String> symptom_one = new ArrayList<String>();
+				            
+				            String[] line_split;
+				            String clips_rule="";
+				            String symptoms="";
+				            String name="";
+				            
+				            for(String temp : data)
 				            {
-				            	if(each_data.contains(each_symptom))
+				            	name = temp.substring(0, temp.indexOf(" "));
+				            	
+				            	clips_rule="(defrule "+name+" \n";
+				            	clips_rule+="(disease-is "+name+")\n";
+				            	clips_rule+="=>\n";
+				            	
+				            	symptoms = temp.substring(temp.indexOf(" ")+1, temp.length());
+				            	
+				            	line_split=symptoms.split(" ");
+				            	
+				            	for(String each_sym : line_split)
 				            	{
-				            		disease_list+=each_data.substring(0, each_data.indexOf(" "))+"\" \"";
+				            		if(!(symptom_one.contains(each_sym)))
+				            		{
+				            			symptom_one.add(each_sym);
+				            		}
 				            	}
+				            	
+				            	symptoms=symptoms.replaceAll(" ", "\" \"");
+				            	
+				            	clips_rule+="(printout t "+symptoms+" crlf))\n";
+	
+					            writer.println(clips_rule);
+	
+				            	clips_rule="";
+				            	symptoms="";
+				            	name="";
+				                line_split=new String[0];
+				                
 				            }
 				            
-			            	clips_rule="(defrule "+each_symptom+" \n";
-			            	clips_rule+="(symptom-is "+each_symptom+")\n";
-			            	clips_rule+="=>\n";
-			            	
-			            	clips_rule+="(printout t "+disease_list+" crlf))\n";
-			            	
-				            writer.println(clips_rule);
+				            clips_rule="";
+				            String disease_list = "";
 				            
-			            	clips_rule="";
-			            	disease_list="";
-			            }
-			            
+				            for(String each_symptom : symptom_one)
+				            {
+					            for(String each_data: data)
+					            {
+					            	if(each_data.contains(each_symptom))
+					            	{
+					            		disease_list+=each_data.substring(0, each_data.indexOf(" "))+"\" \"";
+					            	}
+					            }
+					            
+				            	clips_rule="(defrule "+each_symptom+" \n";
+				            	clips_rule+="(symptom-is "+each_symptom+")\n";
+				            	clips_rule+="=>\n";
+				            	
+				            	clips_rule+="(printout t "+disease_list+" crlf))\n";
+				            	
+					            writer.println(clips_rule);
+					            
+				            	clips_rule="";
+				            	disease_list="";
+				            }
+				            
 
 
 		                writer.close();
@@ -176,6 +178,24 @@ public class InteractiveMedicalAssistant {
 		
 		// IC state is init
 		textArea.setText(IC.interactive_action(""));
+		
+		InputStream in = getClass().getResourceAsStream("/kbs/kbs"); 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		List<String> knowledge = new ArrayList<String>();
+		
+		String line ="";
+		 try {
+			while((line = reader.readLine())!=null)
+			 {
+				knowledge.add(line);
+			 }
+			IC.setKnowledge(knowledge);
+			reader.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+  		
 		
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {

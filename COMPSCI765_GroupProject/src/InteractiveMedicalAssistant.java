@@ -186,10 +186,12 @@ public class InteractiveMedicalAssistant {
 			{
 				IC.setSymptom_add_remove(textField.getText());
 				textArea.setText(IC.interactive_action(textField.getText()));
+				textField.setText("");
 			}
 			else if(IC.getState().equals("advise"))
 			{
 				textArea.setText(IC.interactive_action(textField.getText()));
+				textField.setText("");
 				btnNewButton.setEnabled(false);
 			}
 			else if(IC.getState().equals("yes/no"))
@@ -199,12 +201,14 @@ public class InteractiveMedicalAssistant {
 					if(textField.getText().equals("yes"))
 					{
 						IC.setState("yes");
-						textArea.setText(IC.interactive_action(textField.getText()));	
+						textArea.setText(IC.interactive_action(textField.getText()));
+						textField.setText("");
 					}
 					else if(textField.getText().equals("no"))
 					{
 						IC.setState("no");
 						textArea.setText(IC.interactive_action(textField.getText()));
+						textField.setText("");
 					}
 				}
 				else// keep asking till yes or no is recived

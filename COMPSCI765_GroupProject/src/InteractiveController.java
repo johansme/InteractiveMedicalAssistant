@@ -202,8 +202,6 @@ public class InteractiveController {
 			disease_name = disease_line.substring(0,disease_line.indexOf(":"));
 			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
 			
-			System.out.println("in one");
-			
 			int symptom_hits = 0;
 			for(String has_symptom : this.has_symptom)
 			{
@@ -239,20 +237,21 @@ public class InteractiveController {
 				}
 			}
 		}
-		
+
 		//*** get all symptoms in all disease lines
 		//*** remove has_symtoms and has_not_symptoms
 		//*** creates unknown symptom list
 		//*** information gain on unknown symptom list
 		for(String disease_line : disease_lines)
 		{
-			String symp = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
+			String symp = disease_line.substring(disease_line.indexOf(":")+1,disease_line.length());
 			String[]symptoms = symp.split(":");
 			
 			boolean existing = false;
 			//** if symptom is not in has_symptom and has_not_symptom (new unknown symptoms)
 			for(String symp_unit : symptoms)
 			{
+				System.out.println(symp_unit+": each symptom");
 				for(String hs : this.has_symptom)
 				{
 					if(symp_unit.equals(hs))
@@ -271,38 +270,37 @@ public class InteractiveController {
 				{
 					all_symptoms.add(symp_unit);
 				}
+				existing = false;
 			}
-			existing = false;
-		
-			all_symptoms.size(); //now has all uniq symptoms
 			
-			//information gain here
-			//then yes and no
-			int max = 0;
-			String max_symptom = "";
-			for(String each_symp : all_symptoms)
-			{
-				int freq= Collections.frequency(all_symptoms, each_symp);
-				if(freq >= max)
-				{
-					max=freq;
-					max_symptom = each_symp;
-				}
-			}
+			all_symptoms.size(); //now has all uniq symptoms
+		}
+		
+		//information gain here
+		//then yes and no
+		int max = 0;
+		String max_symptom = "";
 
-			if(max!=0)
+		for(String each_symp : all_symptoms)
+		{
+			int freq= Collections.frequency(all_symptoms, each_symp);
+			if(freq >= max)
 			{
-				this.state = "yes/no";
-				this.symptom_add_remove = max_symptom;
-				return "Are you experiencing the following symptom: " + max_symptom + "? Please use yes or no";
-			}
-			else
-			{
-				return "ELSE (Error)";
+				max=freq;
+				max_symptom = each_symp;
 			}
 		}
 		
-		return "Final (Error)";
+		if(max!=0)
+		{
+			this.state = "yes/no";
+			this.symptom_add_remove = max_symptom;
+			return "Are you experiencing the following symptom: " + max_symptom + "? Please use yes or no";
+		}
+		else
+		{
+			return "ELSE (Error)";
+		}
 	}
 	public String clips_interface()
 	{

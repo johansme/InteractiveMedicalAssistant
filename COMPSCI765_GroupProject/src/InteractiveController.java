@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -173,7 +174,6 @@ public class InteractiveController {
 		// No match above so proceeding with asking more information
 		
 		List<String> all_symptoms = new ArrayList<String>();
-
 		
 		disease.size();// has all the possible disease lines
 
@@ -214,9 +214,30 @@ public class InteractiveController {
 			all_symptoms.size(); //now has all uniq symptoms
 			
 			//information gain here
+			//then yes and no
+			int max = 0;
+			String max_symptom = "";
+			for(String each_symp : all_symptoms)
+			{
+				int freq= Collections.frequency(all_symptoms, each_symp);
+				if(freq >= max)
+				{
+					max=freq;
+					max_symptom = each_symp;
+				}
+			}
+			
+			if(max!=0)
+			{
+				return "Do you experience: " + max_symptom;
+			}
+			else
+			{
+				return "ELSE (Error)";
+			}
 		}
 		
-		return "";
+		return "Final (Error)";
 	}
 	public String clips_interface()
 	{

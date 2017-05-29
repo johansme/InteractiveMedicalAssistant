@@ -67,12 +67,6 @@ public class InteractiveController {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public List<String> getSymptom() {
-		return symptom;
-	}
-	public void setSymptom(List<String> symptom) {
-		this.symptom = symptom;
-	}
 	public String getDiagnose() {
 		return diagnose;
 	}
@@ -126,14 +120,14 @@ public class InteractiveController {
 			//ask question to refine model
 			
 			//if found, its a valid symptom hence its added to user model
-			(this.getSymptom()).add(response_update);
+			(this.has_symptom).add(response_update);
 			//symptom added to model
 			int count = 0;
 			List<String> current_symptom = new ArrayList<String>();
 			
 			for(String st : this.knowledge)
 			{
-				for(String each_st : this.getSymptom())
+				for(String each_st : (this.has_symptom))
 				{
 					if(st.contains(each_st))
 					{

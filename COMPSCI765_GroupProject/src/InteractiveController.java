@@ -146,9 +146,45 @@ public class InteractiveController {
 			}
 		}
 		//****************REMOVE****************//
-		
+
 		//****************CLEAR*****************//
 		
+		int count = 0;
+		List<String> to_remove = new ArrayList<String>();
+		
+		for(String dsname : disease)
+		{
+			for(String kbs : this.knowledge)
+			{
+				if(kbs.substring(0, kbs.indexOf(":")).equals(dsname))
+				{
+
+					for(String hs_sym : this.has_symptom)
+					{
+						//if has all then retain else remove
+						String [] s = (kbs.substring(kbs.indexOf(":"),kbs.length())).split(":");
+						for(String s1 : s)
+						{
+							if(s1.equals(hs_sym))
+							{
+								count++;
+							}
+							System.out.println(":"+dsname+":"+kbs+":"+hs_sym+":"+s1+":"+disease.size());
+						}
+					}
+				}
+			}
+			if(!(count==this.has_symptom.size()))
+			{
+				to_remove.add(dsname);
+				System.out.println("Removed: "+dsname);
+			}
+			count = 0;
+		}
+		for(String remove : to_remove)
+		{
+			while(disease.remove(remove)){};
+		}
 		//****************CLEAR*****************//
 
 		//****************CHECK****************//
@@ -261,14 +297,15 @@ public class InteractiveController {
 				System.out.println(each_symp+"...SSS");
 			}
 			System.out.println("------------"+ max_symptom+" @ "+max);
+			
 			for(String has : this.has_symptom)
 			{
 				System.out.println("has: "+has);
 			}
-			System.out.println("---");
+
 			for(String has_not : this.has_not_symptom)
 			{
-				System.out.println("has: "+has_not);
+				System.out.println("has not: "+has_not);
 			}
 
 			if(max!=0)

@@ -120,16 +120,43 @@ public class InteractiveController {
 		
 		for(String str : this.knowledge)
 		{
-			if(str.contains(response_update))
+			for(String has_str : this.has_symptom)
 			{
-				if(!(str.substring(0, str.indexOf(" "))).equals(response_update))
+				if(str.contains(has_str))
 				{
-					disease.add(str.substring(0, str.indexOf(" ")));	
-					found = true;
+					disease.add(str.substring(0, str.indexOf(":")));
 				}
 			}
 		}
 		
+		for(String str : this.knowledge)
+		{
+			for(String has_not_str : this.has_not_symptom)
+			{
+				if(str.contains(has_not_str))
+				{
+					while(disease.remove(str.substring(0, str.indexOf(":")))){};
+				}
+			}
+		}
+		
+		if(disease.size()==1)
+		{
+			String disease_line="";
+			disease_line = disease.get(0);
+			
+			
+		}
+		
+		
+		if(str.contains(response_update))
+		{
+			if(!(str.substring(0, str.indexOf(" "))).equals(response_update))
+			{
+				disease.add(str.substring(0, str.indexOf(" ")));	
+				found = true;
+			}
+		}
 		
 		
 		/*

@@ -114,12 +114,12 @@ public class InteractiveController {
 	public String evaluate_model(String response_update)
 	{
 		List<String> disease = new ArrayList<String>();
-		//****************ADD*******************//
+		//****************ADD*******************// only if not already added
 		for(String str : this.knowledge)
 		{
 			for(String has_str : this.has_symptom)
 			{
-				if(str.contains(has_str))
+				if(str.contains(has_str)&&!(disease.contains(str.substring(0, str.indexOf(":")))))
 				{
 					disease.add(str.substring(0, str.indexOf(":")));
 				}
@@ -140,6 +140,11 @@ public class InteractiveController {
 		}
 		//****************REMOVE****************//
 		//****************CHECK****************//
+		System.out.println(disease.size()+"---Size");
+		for(String str : disease)
+		{
+			System.out.println(str+"---name");
+		}
 		if(disease.size()==1)
 		{
 			String disease_line="";

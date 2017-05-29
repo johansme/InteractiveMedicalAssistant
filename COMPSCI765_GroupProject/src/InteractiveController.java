@@ -159,7 +159,7 @@ public class InteractiveController {
 			if(this.has_symptom.size()==symptom_hits)
 			{
 				this.state = "advise"; //found match
-				return disease_name;
+				return "Possible : "+disease_name;
 			}
 			symptom_hits=0;
 		}
@@ -234,10 +234,21 @@ public class InteractiveController {
 				}
 			}
 			
+			for(String has : this.has_symptom)
+			{
+				System.out.println("has: "+has);
+			}
+			System.out.println("---");
+			for(String has_not : this.has_not_symptom)
+			{
+				System.out.println("has: "+has_not);
+			}
+
 			if(max!=0)
 			{
 				this.state = "yes/no";
-				return "Are you experiencing the following symptom: " + max_symptom;
+				this.symptom_add_remove = max_symptom;
+				return "Are you experiencing the following symptom: " + max_symptom + "? Please use yes or no";
 			}
 			else
 			{

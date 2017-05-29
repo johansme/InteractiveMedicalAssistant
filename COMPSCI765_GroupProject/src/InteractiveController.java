@@ -172,68 +172,9 @@ public class InteractiveController {
 		
 		// No match above so proceeding with asking more information
 		
+		List<String> has_symptom_list = new ArrayList<String>();
+		List<String> has_not_symptom_list = new ArrayList<String>();
 		
-		
-		/*
-		// This method updates the existing model with the response
-		// evaluates whether the model is complete
-		// interfaces with clips to obtain facts
-		
-		
-		
-		if(found)
-		{
-			found = false;
-			//find the most common symptoms in the list of diseases found
-			//use this to filter list
-			//iterate through model to eliminate diseases
-			//ask question to refine model
-			
-			//if found, its a valid symptom hence its added to user model
-			(this.has_symptom).add(response_update);
-			//symptom added to model
-			int count = 0;
-			List<String> current_symptom = new ArrayList<String>();
-			
-			for(String st : this.knowledge)
-			{
-				for(String each_st : (this.has_symptom))
-				{
-					if(st.contains(each_st))
-					{
-						if(!(current_symptom.contains(each_st)))
-						{
-							current_symptom.add(each_st);
-						}
-						count++;
-					}
-				}
-				String [] total = (st.substring(st.indexOf(" ")+1, st.length())).split(" ");
-
-				if(total.length==count)
-				{
-					return "Match Found ! " + st;
-				}
-				count = 0;
-			}
-
-			
-			//evaluate model to see if it is completed
-
-			//ask question to refine model
-			String send_symptoms="";
-			for(String str1 : current_symptom)
-			{
-				send_symptoms+=str1+" ";
-			}
-			return "Symptom found, we currently have : " + send_symptoms;
-			
-		}
-		else
-		{
-			return "Unfortunately the symptom was not found, please try again . . .";
-		}
-		*/
 		return "";
 	}
 	public String clips_interface()

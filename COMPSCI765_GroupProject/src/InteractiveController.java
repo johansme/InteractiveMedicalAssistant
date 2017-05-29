@@ -18,26 +18,37 @@ public class InteractiveController {
 	
 	private int age;
 	private String gender;
-	private List<String> symptom;
+	private List<String> has_symptom;
+	private List<String> has_not_symptom;
 	private String diagnose;
-	
-	public List<String> getKnowledge() {
-		return knowledge;
-	}
 
-	public void setKnowledge(List<String> knowledge) {
-		this.knowledge = knowledge;
-	}
-	
 	public InteractiveController()
 	{
 		this.state="init";
 		this.age = 0;
 		this.gender = "";
 		this.diagnose = "";
-		this.symptom = new ArrayList<String>();
+		this.has_symptom = new ArrayList<String>();
+		this.has_not_symptom = new ArrayList<String>();
 	}
-	
+	public List<String> getHas_symptom() {
+		return has_symptom;
+	}
+	public void setHas_symptom(List<String> has_symptom) {
+		this.has_symptom = has_symptom;
+	}
+	public List<String> getHas_not_symptom() {
+		return has_not_symptom;
+	}
+	public void setHas_not_symptom(List<String> has_not_symptom) {
+		this.has_not_symptom = has_not_symptom;
+	}
+	public List<String> getKnowledge() {
+		return knowledge;
+	}
+	public void setKnowledge(List<String> knowledge) {
+		this.knowledge = knowledge;
+	}
 	public String getState() {
 		return state;
 	}

@@ -18,10 +18,11 @@ public class InteractiveController {
 	
 	private int age;
 	private String gender;
+	private String diagnose;
 	private List<String> has_symptom;
 	private List<String> has_not_symptom;
-	private String diagnose;
-
+	private String symptom_add_remove;
+	
 	public InteractiveController()
 	{
 		this.state="init";
@@ -30,6 +31,13 @@ public class InteractiveController {
 		this.diagnose = "";
 		this.has_symptom = new ArrayList<String>();
 		this.has_not_symptom = new ArrayList<String>();
+		this.symptom_add_remove = "";
+	}
+	public String getSymptom_add_remove() {
+		return symptom_add_remove;
+	}
+	public void setSymptom_add_remove(String symptom_add_remove) {
+		this.symptom_add_remove = symptom_add_remove;
 	}
 	public List<String> getHas_symptom() {
 		return has_symptom;
@@ -81,24 +89,35 @@ public class InteractiveController {
 			//state changed to asked question mode
 			this.state = "question";
 			//response value is blank from UI
-			clips_interface();
+			//clips_interface();
 			return "What symptom do you have?";
 		}
 		if(this.state.equals("question"))
 		{
-			//as state is question, expecting a response to the most recent question asked
-			return(update_evaluate_model(response));
+			//as state is question
+			return(evaluate_model(response));
 		}
+		
+		//*************************************//
+		if(this.state.equals("yes"))
+		{
+			this.has_symptom.add(this.symptom_add_remove);
+			return(evaluate_model(response));
+		}
+		if(this.state.equals("no"))
+		{
+			this.has_not_symptom.add(this.symptom_add_remove);
+			return(evaluate_model(response));
+		}		
+		//*************************************//
+		
 		return this.state;
 	}
-	public String update_evaluate_model(String response_update)
+	public String evaluate_model(String response_update)
 	{
-		// This method updates the existing model with the response
-		// evaluates whether the model is complete
-		// interfaces with clips to obtain facts
 		List<String> disease = new ArrayList<String>();
-		
 		boolean found = false;
+		
 		for(String str : this.knowledge)
 		{
 			if(str.contains(response_update))
@@ -110,6 +129,15 @@ public class InteractiveController {
 				}
 			}
 		}
+		
+		
+		
+		/*
+		// This method updates the existing model with the response
+		// evaluates whether the model is complete
+		// interfaces with clips to obtain facts
+		
+		
 		
 		if(found)
 		{
@@ -163,6 +191,8 @@ public class InteractiveController {
 		{
 			return "Unfortunately the symptom was not found, please try again . . .";
 		}
+		*/
+		return "";
 	}
 	public String clips_interface()
 	{

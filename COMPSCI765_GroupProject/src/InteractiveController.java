@@ -143,20 +143,27 @@ public class InteractiveController {
 		if(disease.size()==1)
 		{
 			String disease_line="";
+			String disease_name="";
 			disease_line = disease.get(0);
+			disease_name = disease_line.substring(0,disease_line.indexOf(":"));
+			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length()-1);
 			
-			
-		}
-		
-		
-		if(str.contains(response_update))
-		{
-			if(!(str.substring(0, str.indexOf(" "))).equals(response_update))
+			int symptom_hits = 0;
+			for(String has_symptom : this.has_symptom)
 			{
-				disease.add(str.substring(0, str.indexOf(" ")));	
-				found = true;
+				if(symptom_line.contains(has_symptom))
+				{
+					symptom_hits++;
+				}
 			}
+			if(this.has_symptom.size()==symptom_hits)
+			{
+				this.state = "advise"; //found match !
+				return disease_name;
+			}
+			symptom_hits=0;
 		}
+		
 		
 		
 		/*

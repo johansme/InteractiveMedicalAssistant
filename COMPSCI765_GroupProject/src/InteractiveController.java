@@ -117,7 +117,7 @@ public class InteractiveController {
 	{
 		List<String> disease = new ArrayList<String>();
 		boolean found = false;
-		
+		//****************ADD*******************//
 		for(String str : this.knowledge)
 		{
 			for(String has_str : this.has_symptom)
@@ -128,7 +128,9 @@ public class InteractiveController {
 				}
 			}
 		}
-		
+		//****************ADD*******************//
+
+		//****************REMOVE****************//
 		for(String str : this.knowledge)
 		{
 			for(String has_not_str : this.has_not_symptom)
@@ -139,7 +141,9 @@ public class InteractiveController {
 				}
 			}
 		}
-		
+		//****************REMOVE****************//
+
+		//****************CHECK****************//
 		if(disease.size()==1)
 		{
 			String disease_line="";
@@ -158,11 +162,15 @@ public class InteractiveController {
 			}
 			if(this.has_symptom.size()==symptom_hits)
 			{
-				this.state = "advise"; //found match !
+				this.state = "advise"; //found match
 				return disease_name;
 			}
 			symptom_hits=0;
 		}
+		//****************CHECK****************//
+		
+		
+		// No match above so proceeding with asking more information
 		
 		
 		

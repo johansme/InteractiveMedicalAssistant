@@ -172,8 +172,49 @@ public class InteractiveController {
 		
 		// No match above so proceeding with asking more information
 		
-		List<String> has_symptom_list = new ArrayList<String>();
-		List<String> has_not_symptom_list = new ArrayList<String>();
+		List<String> all_symptoms = new ArrayList<String>();
+
+		
+		disease.size();// has all the possible disease lines
+
+		//*** get all symptoms in all disease lines
+		//*** remove has_symtoms and has_not_symptoms
+		//*** creates unknown symptom list
+		//*** information gain on unknown symptom list
+		for(String disease_line : disease)
+		{
+			String symp = disease_line.substring(0,disease_line.indexOf(":"));
+			String[]symptoms = symp.split(":");
+			
+			boolean existing = false;
+			//** if symptom is not in has_symptom and has_not_symptom (new unknown symptoms)
+			for(String symp_unit : symptoms)
+			{
+				for(String hs : this.has_symptom)
+				{
+					if(symp_unit.equals(hs))
+					{
+						existing = true;
+					}
+				}
+				for(String hns : this.has_not_symptom)
+				{
+					if(symp_unit.equals(hns))
+					{
+						existing = true;
+					}
+				}
+				if(!existing)
+				{
+					all_symptoms.add(symp_unit);
+				}
+			}
+			existing = false;
+			
+			all_symptoms.size(); //now has all uniq symptoms
+			
+			//information gain here
+		}
 		
 		return "";
 	}

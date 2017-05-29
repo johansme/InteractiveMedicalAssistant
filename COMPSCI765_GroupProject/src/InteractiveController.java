@@ -117,41 +117,62 @@ public class InteractiveController {
 		//****************ADD*******************// only if not already added
 		for(String str : this.knowledge)
 		{
+			String [] ksymptoms = (str.substring(str.indexOf(":"),str.length())).split(":");
 			for(String has_str : this.has_symptom)
 			{
-				if(str.contains(has_str)&&!(disease.contains(str.substring(0, str.indexOf(":")))))
+				for(String satomic : ksymptoms)
 				{
-					disease.add(str.substring(0, str.indexOf(":")));
+					if(satomic.equals(has_str)&&!(disease.contains(str.substring(0, str.indexOf(":")))))
+					{
+						disease.add(str.substring(0, str.indexOf(":")));
+					}					
 				}
 			}
 		}
 		//****************ADD*******************//
-
 		//****************REMOVE****************//
 		for(String str : this.knowledge)
 		{
+			String [] ksymptoms = (str.substring(str.indexOf(":"),str.length())).split(":");
 			for(String has_not_str : this.has_not_symptom)
 			{
-				if(str.contains(has_not_str))
+				for(String satomic : ksymptoms)
 				{
-					while(disease.remove(str.substring(0, str.indexOf(":")))){};
+					if(satomic.equals(has_not_str))
+					{
+						while(disease.remove(str.substring(0, str.indexOf(":")))){};
+					}
 				}
 			}
 		}
 		//****************REMOVE****************//
+		
+		//****************CLEAR*****************//
+		
+		//****************CLEAR*****************//
+
 		//****************CHECK****************//
 		System.out.println(disease.size()+"---Size");
 		for(String str : disease)
 		{
 			System.out.println(str+"---name");
 		}
-		if(disease.size()==1)
+		if(disease.size()==1) // match on single
 		{
 			String disease_line="";
+			for(String line : this.knowledge)
+			{
+				if(line.substring(0, line.indexOf(":")).equals(disease.get(0)))
+				{
+					disease_line = line;
+				}
+			}
+			
 			String disease_name="";
-			disease_line = disease.get(0);
 			disease_name = disease_line.substring(0,disease_line.indexOf(":"));
 			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
+			
+			System.out.println("in one");
 			
 			int symptom_hits = 0;
 			for(String has_symptom : this.has_symptom)
@@ -237,8 +258,9 @@ public class InteractiveController {
 					max=freq;
 					max_symptom = each_symp;
 				}
+				System.out.println(each_symp+"...SSS");
 			}
-			
+			System.out.println("------------"+ max_symptom+" @ "+max);
 			for(String has : this.has_symptom)
 			{
 				System.out.println("has: "+has);

@@ -229,7 +229,8 @@ public class InteractiveController {
 			
 			if(max!=0)
 			{
-				return "Do you experience: " + max_symptom;
+				this.state = "yes/no";
+				return max_symptom;
 			}
 			else
 			{

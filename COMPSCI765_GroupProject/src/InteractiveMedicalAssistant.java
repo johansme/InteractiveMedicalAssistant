@@ -84,14 +84,11 @@ public class InteractiveMedicalAssistant {
 			            	data.add(line);
 			            }
 			            bf.close();
-			            
-			            
-			            try{
+   
+			            try
+			            {
 			                PrintWriter writer = new PrintWriter("kbs.clp", "UTF-8");
-			               
-			            
-				            List<String> symptom_one = new ArrayList<String>();
-				            
+			                List<String> symptom_one = new ArrayList<String>();
 				            String[] line_split;
 				            String clips_rule="";
 				            String symptoms="";
@@ -118,21 +115,16 @@ public class InteractiveMedicalAssistant {
 				            	}
 				            	
 				            	symptoms=symptoms.replaceAll(" ", "\" \"");
-				            	
 				            	clips_rule+="(printout t "+symptoms+" crlf))\n";
-	
 					            writer.println(clips_rule);
-	
 				            	clips_rule="";
 				            	symptoms="";
 				            	name="";
-				                line_split=new String[0];
-				                
+				                line_split=new String[0]; 
 				            }
 				            
 				            clips_rule="";
 				            String disease_list = "";
-				            
 				            for(String each_symptom : symptom_one)
 				            {
 					            for(String each_data: data)
@@ -146,27 +138,17 @@ public class InteractiveMedicalAssistant {
 				            	clips_rule="(defrule "+each_symptom+" \n";
 				            	clips_rule+="(symptom-is "+each_symptom+")\n";
 				            	clips_rule+="=>\n";
-				            	
 				            	clips_rule+="(printout t "+disease_list+" crlf))\n";
-				            	
 					            writer.println(clips_rule);
-					            
 				            	clips_rule="";
 				            	disease_list="";
 				            }
-				            
-
-
-		                writer.close();
-		            } catch (Exception excepx) {
-
-		            }
-			            
-			            
-		            }
-		            catch (Exception excep)
-		            {
-
+		                    writer.close();
+			            }
+				        catch (Exception excepx) {
+			            }
+                    }
+		            catch (Exception excep){
 		            }
 		        }
 			}
@@ -183,7 +165,7 @@ public class InteractiveMedicalAssistant {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		List<String> knowledge = new ArrayList<String>();
 		
-		String line ="";
+		String line = "";
 		 try {
 			while((line = reader.readLine())!=null)
 			 {
@@ -192,7 +174,6 @@ public class InteractiveMedicalAssistant {
 			IC.setKnowledge(knowledge);
 			reader.close();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
   		
@@ -209,6 +190,10 @@ public class InteractiveMedicalAssistant {
 			{
 				textArea.setText(IC.interactive_action(textField.getText()));
 				btnNewButton.setEnabled(false);
+			}
+			else if(IC.getState().equals("yes/no"))
+			{
+				textArea.setText("Do you experience : "+IC.interactive_action(textField.getText()));
 			}
 		}
 		});

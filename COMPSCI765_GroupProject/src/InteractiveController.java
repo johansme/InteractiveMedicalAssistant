@@ -169,7 +169,6 @@ public class InteractiveController {
 							{
 								count++;
 							}
-							System.out.println(":"+dsname+":"+kbs+":"+hs_sym+":"+s1+":"+disease.size());
 						}
 					}
 				}
@@ -177,7 +176,6 @@ public class InteractiveController {
 			if(!(count==this.has_symptom.size()))
 			{
 				to_remove.add(dsname);
-				System.out.println("Removed: "+dsname);
 			}
 			count = 0;
 		}
@@ -188,11 +186,7 @@ public class InteractiveController {
 		//****************CLEAR*****************//
 
 		//****************CHECK****************//
-		System.out.println(disease.size()+"---Size");
-		for(String str : disease)
-		{
-			System.out.println(str+"---name");
-		}
+
 		if(disease.size()==1) // match on single
 		{
 			String disease_line="";
@@ -294,18 +288,6 @@ public class InteractiveController {
 					max=freq;
 					max_symptom = each_symp;
 				}
-				System.out.println(each_symp+"...SSS");
-			}
-			System.out.println("------------"+ max_symptom+" @ "+max);
-			
-			for(String has : this.has_symptom)
-			{
-				System.out.println("has: "+has);
-			}
-
-			for(String has_not : this.has_not_symptom)
-			{
-				System.out.println("has not: "+has_not);
 			}
 
 			if(max!=0)

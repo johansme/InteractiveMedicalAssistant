@@ -251,7 +251,6 @@ public class InteractiveController {
 			//** if symptom is not in has_symptom and has_not_symptom (new unknown symptoms)
 			for(String symp_unit : symptoms)
 			{
-				System.out.println(symp_unit+": each symptom");
 				for(String hs : this.has_symptom)
 				{
 					if(symp_unit.equals(hs))

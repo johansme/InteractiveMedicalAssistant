@@ -182,8 +182,9 @@ public class InteractiveMedicalAssistant {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			if(IC.getState().equals("question"))
+			if(IC.getState().equals("yes"))
 			{
+				IC.setSymptom_add_remove(textField.getText());
 				textArea.setText(IC.interactive_action(textField.getText()));
 			}
 			else if(IC.getState().equals("advise"))
@@ -193,7 +194,23 @@ public class InteractiveMedicalAssistant {
 			}
 			else if(IC.getState().equals("yes/no"))
 			{
-				textArea.setText("Do you experience : "+IC.interactive_action(textField.getText()));
+				if(textField.getText().equals("yes")||textField.getText().equals("no"))
+				{
+					if(textField.getText().equals("yes"))
+					{
+						IC.setState("yes");
+						textArea.setText(IC.interactive_action(textField.getText()));	
+					}
+					else if(textField.getText().equals("no"))
+					{
+						IC.setState("no");
+						textArea.setText(IC.interactive_action(textField.getText()));
+					}
+				}
+				else// keep asking till yes or no is recived
+				{
+					JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
+				}
 			}
 		}
 		});

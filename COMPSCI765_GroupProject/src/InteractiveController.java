@@ -88,25 +88,22 @@ public class InteractiveController {
 		if(this.state.equals("init"))
 		{
 			//state changed to asked question mode
-			this.state = "question";
+			this.state = "yes";
 			//response value is blank from UI
 			//clips_interface();
 			return "What symptom do you have?";
-		}
-		if(this.state.equals("question"))
-		{
-			//as state is question
-			return(evaluate_model(response));
 		}
 		
 		//*************************************//
 		if(this.state.equals("yes"))
 		{
+			//!!!!! Check symptom from UI if valid - then add
 			this.has_symptom.add(this.symptom_add_remove);
 			return(evaluate_model(response));
 		}
 		if(this.state.equals("no"))
 		{
+			//!!!!! Check symptom from UI if valid - then add
 			this.has_not_symptom.add(this.symptom_add_remove);
 			return(evaluate_model(response));
 		}		
@@ -117,7 +114,6 @@ public class InteractiveController {
 	public String evaluate_model(String response_update)
 	{
 		List<String> disease = new ArrayList<String>();
-		boolean found = false;
 		//****************ADD*******************//
 		for(String str : this.knowledge)
 		{
@@ -143,7 +139,6 @@ public class InteractiveController {
 			}
 		}
 		//****************REMOVE****************//
-
 		//****************CHECK****************//
 		if(disease.size()==1)
 		{
@@ -151,7 +146,7 @@ public class InteractiveController {
 			String disease_name="";
 			disease_line = disease.get(0);
 			disease_name = disease_line.substring(0,disease_line.indexOf(":"));
-			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length()-1);
+			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
 			
 			int symptom_hits = 0;
 			for(String has_symptom : this.has_symptom)
@@ -170,20 +165,32 @@ public class InteractiveController {
 		}
 		//****************CHECK****************//
 		
-		
 		// No match above so proceeding with asking more information
 		
 		List<String> all_symptoms = new ArrayList<String>();
 		
-		disease.size();// has all the possible disease lines
+		disease.size();// has all the possible disease names!
+		//get all disease lines
+		List<String> disease_lines = new ArrayList<String>();
 
+		for(String name : disease)
+		{
+			for(String kbs : this.knowledge)
+			{
+				if(kbs.contains(name))
+				{
+					disease_lines.add(kbs);
+				}
+			}
+		}
+		
 		//*** get all symptoms in all disease lines
 		//*** remove has_symtoms and has_not_symptoms
 		//*** creates unknown symptom list
 		//*** information gain on unknown symptom list
-		for(String disease_line : disease)
+		for(String disease_line : disease_lines)
 		{
-			String symp = disease_line.substring(0,disease_line.indexOf(":"));
+			String symp = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
 			String[]symptoms = symp.split(":");
 			
 			boolean existing = false;
@@ -210,7 +217,7 @@ public class InteractiveController {
 				}
 			}
 			existing = false;
-			
+		
 			all_symptoms.size(); //now has all uniq symptoms
 			
 			//information gain here
@@ -230,7 +237,7 @@ public class InteractiveController {
 			if(max!=0)
 			{
 				this.state = "yes/no";
-				return max_symptom;
+				return "Are you experiencing the following symptom: " + max_symptom;
 			}
 			else
 			{

@@ -299,7 +299,7 @@ public class InteractiveController {
 		}
 		else
 		{
-			return "ELSE (Error)";
+			return "Symptom Combination Does Not Exist in Knowledge Base";
 		}
 	}
 	public String clips_interface()

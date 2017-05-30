@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import java.awt.TextArea;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InteractiveMedicalAssistant {
 
@@ -204,7 +206,7 @@ public class InteractiveMedicalAssistant {
 						textField.setText("");
 					}
 				}
-				else// keep asking till yes or no is recived
+				else// keep asking till yes or no is received
 				{
 					JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
 				}
@@ -229,6 +231,47 @@ public class InteractiveMedicalAssistant {
 		frmCompsciInteractiveMedical.getContentPane().add(textArea);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(IC.getState().equals("yes"))
+					{
+						IC.setSymptom_add_remove(textField.getText());
+						textArea.setText(IC.interactive_action(textField.getText()));
+						textField.setText("");
+					}
+					else if(IC.getState().equals("advise"))
+					{
+						textArea.setText(IC.interactive_action(textField.getText()));
+						textField.setText("");
+						btnNewButton.setEnabled(false);
+					}
+					else if(IC.getState().equals("yes/no"))
+					{
+						if(textField.getText().equals("yes")||textField.getText().equals("no"))
+						{
+							if(textField.getText().equals("yes"))
+							{
+								IC.setState("yes");
+								textArea.setText(IC.interactive_action(textField.getText()));
+								textField.setText("");
+							}
+							else if(textField.getText().equals("no"))
+							{
+								IC.setState("no");
+								textArea.setText(IC.interactive_action(textField.getText()));
+								textField.setText("");
+							}
+						}
+						else// keep asking till yes or no is received
+						{
+							JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
+						}
+					}			 
+				}
+			}
+		});
 		textField.setBounds(104, 195, 547, 20);
 		frmCompsciInteractiveMedical.getContentPane().add(textField);
 		textField.setColumns(10);

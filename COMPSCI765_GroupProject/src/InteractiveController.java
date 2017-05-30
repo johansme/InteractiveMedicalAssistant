@@ -85,7 +85,6 @@ public class InteractiveController {
 	public void clearKnowledge(){
 		this.knowledge.clear();
 	}
-
 	public String interactive_action(String response)
 	{
 		if(this.state.equals("init"))

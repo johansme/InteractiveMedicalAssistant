@@ -206,7 +206,7 @@ public class InteractiveMedicalAssistant {
 						textField.setText("");
 					}
 				}
-				else// keep asking till yes or no is received
+				else// keep asking till yes or no
 				{
 					JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
 				}
@@ -234,44 +234,46 @@ public class InteractiveMedicalAssistant {
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(IC.getState().equals("yes"))
-					{
-						IC.setSymptom_add_remove(textField.getText());
-						textArea.setText(IC.interactive_action(textField.getText()));
-						textField.setText("");
-					}
-					else if(IC.getState().equals("advise"))
-					{
-						textArea.setText(IC.interactive_action(textField.getText()));
-						textField.setText("");
-						btnNewButton.setEnabled(false);
-					}
-					else if(IC.getState().equals("yes/no"))
-					{
-						if(textField.getText().equals("yes")||textField.getText().equals("no"))
+				  if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+						
+						if(IC.getState().equals("yes"))
 						{
-							if(textField.getText().equals("yes"))
-							{
-								IC.setState("yes");
-								textArea.setText(IC.interactive_action(textField.getText()));
-								textField.setText("");
-							}
-							else if(textField.getText().equals("no"))
-							{
-								IC.setState("no");
-								textArea.setText(IC.interactive_action(textField.getText()));
-								textField.setText("");
-							}
+							IC.setSymptom_add_remove(textField.getText());
+							textArea.setText(IC.interactive_action(textField.getText()));
+							textField.setText("");
 						}
-						else// keep asking till yes or no is received
+						else if(IC.getState().equals("advise"))
 						{
-							JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
+							textArea.setText(IC.interactive_action(textField.getText()));
+							textField.setText("");
+							btnNewButton.setEnabled(false);
 						}
-					}			 
-				}
+						else if(IC.getState().equals("yes/no"))
+						{
+							if(textField.getText().equals("yes")||textField.getText().equals("no"))
+							{
+								if(textField.getText().equals("yes"))
+								{
+									IC.setState("yes");
+									textArea.setText(IC.interactive_action(textField.getText()));
+									textField.setText("");
+								}
+								else if(textField.getText().equals("no"))
+								{
+									IC.setState("no");
+									textArea.setText(IC.interactive_action(textField.getText()));
+									textField.setText("");
+								}
+							}
+							else// keep asking till yes or no
+							{
+								JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
+							}
+					   }					  
+				  }				
 			}
 		});
+		
 		textField.setBounds(104, 195, 547, 20);
 		frmCompsciInteractiveMedical.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -279,17 +281,5 @@ public class InteractiveMedicalAssistant {
 		JLabel lblResponse = new JLabel("Response:");
 		lblResponse.setBounds(38, 198, 60, 14);
 		frmCompsciInteractiveMedical.getContentPane().add(lblResponse);
-		
-		JButton btnNewButton_2 = new JButton("Clear");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textArea.setText("");
-				textField.setText("");
-				btnNewButton.setEnabled(true);
-				
-			}
-		});
-		btnNewButton_2.setBounds(551, 292, 89, 23);
-		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_2);
 	}
 }

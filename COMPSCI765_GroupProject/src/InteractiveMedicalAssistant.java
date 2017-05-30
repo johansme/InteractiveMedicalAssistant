@@ -166,7 +166,7 @@ public class InteractiveMedicalAssistant {
 			 }
 			IC.setKnowledge(knowledge);
 			reader.close();
-		} catch (IOException e1) {
+		}catch (IOException e1) {
 			e1.printStackTrace();
 		}
   		

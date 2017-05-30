@@ -93,7 +93,7 @@ public class InteractiveController {
 			//state changed to asked question mode
 			this.state = "yes";
 			//response value is blank from UI
-			//clips_interface();
+			clips_interface();
 			return "What symptom do you have?";
 		}
 		
@@ -306,31 +306,11 @@ public class InteractiveController {
 	}
 	public String clips_interface()
 	{
-		
 		//CLIPSJNI.dll must be in system32 or OS equivalent
-		//Environment clips = new Environment();
-		//clips.loadFromResource("/kbs/kb.clp");
-		//clips.reset();
-		//clips.run();
-		//clips.assertString("(myTemp (one asd) (second jhg))");
-	    //clips.assertString("(myTemp (one bvc) (second kjh))");
-		//String evalStr = "(find-all-facts ((?f state-list)) TRUE)";
-		//String currentID = clips.eval(evalStr).get(0).getFactSlot("current").toString();
-	    //clips.run();
-	    //clips.assertString("(animal-is duck)");
-		//clips.assertString("(facts)");
-		//MultifieldValue mv = (MultifieldValue) clips.eval("()");
-		//PrimitiveValue pvl = clips.eval("(facts)");
-		//System.out.println(pvl.toString()+"-");
-		//String evalStr = "(find-fact ((?f myTemp)) (eq ?p:one bvc))";
-        //MultifieldValue mv = (MultifieldValue) clips.eval("(run)");
-		//clips.eval("(facts)");
-		//clips.eval("(list-deffacts)");
-		//clips.eval("(find-fact)");
-		//clips.eval("(run)");
-		//clips.eval("(assert (symptom-is fever))");
-		//clips.assertString("(symptom-is fever)");
-		//clips.eval("(run)");
+		Environment clips = new Environment();
+		clips.loadFromResource("/kbs/kbs.clp");
+		clips.run();
+		clips.eval("(facts)");
         //clips.reset();
 		//clips.run();
 		//clips.destroy();

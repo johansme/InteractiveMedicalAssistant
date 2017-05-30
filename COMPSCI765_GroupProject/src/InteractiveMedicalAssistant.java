@@ -1,34 +1,23 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import net.sf.clipsrules.jni.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.TextArea;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class InteractiveMedicalAssistant {
 
@@ -67,6 +56,9 @@ public class InteractiveMedicalAssistant {
 		frmCompsciInteractiveMedical.getContentPane().addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				// if enter here, built-in KB gets overwritten by user input
+				IC.clearKnowledge();
+				
 				JFileChooser fileChooser = new JFileChooser();
 			    int result = fileChooser.showOpenDialog(null);
 			    if (result == JFileChooser.APPROVE_OPTION)
@@ -83,6 +75,7 @@ public class InteractiveMedicalAssistant {
 			            {
 			            	data.add(line);
 			            }
+			            IC.setKnowledge(data);
 			            bf.close();
    
 			            try
@@ -96,15 +89,15 @@ public class InteractiveMedicalAssistant {
 				            
 				            for(String temp : data)
 				            {
-				            	name = temp.substring(0, temp.indexOf(" "));
+				            	name = temp.substring(0, temp.indexOf(":"));
 				            	
 				            	clips_rule="(defrule "+name+" \n";
 				            	clips_rule+="(disease-is "+name+")\n";
 				            	clips_rule+="=>\n";
 				            	
-				            	symptoms = temp.substring(temp.indexOf(" ")+1, temp.length());
+				            	symptoms = temp.substring(temp.indexOf(":")+1, temp.length());
 				            	
-				            	line_split=symptoms.split(" ");
+				            	line_split=symptoms.split(":");
 				            	
 				            	for(String each_sym : line_split)
 				            	{
@@ -114,7 +107,7 @@ public class InteractiveMedicalAssistant {
 				            		}
 				            	}
 				            	
-				            	symptoms=symptoms.replaceAll(" ", "\" \"");
+				            	symptoms=symptoms.replaceAll(":", "\" \"");
 				            	clips_rule+="(printout t "+symptoms+" crlf))\n";
 					            writer.println(clips_rule);
 				            	clips_rule="";
@@ -131,7 +124,7 @@ public class InteractiveMedicalAssistant {
 					            {
 					            	if(each_data.contains(each_symptom))
 					            	{
-					            		disease_list+=each_data.substring(0, each_data.indexOf(" "))+"\" \"";
+					            		disease_list+=each_data.substring(0, each_data.indexOf(":"))+"\" \"";
 					            	}
 					            }
 					            

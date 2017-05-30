@@ -82,6 +82,9 @@ public class InteractiveController {
 	public void setDiagnose(String diagnose) {
 		this.diagnose = diagnose;
 	}
+	public void clearKnowledge(){
+		this.knowledge.clear();
+	}
 
 	public String interactive_action(String response)
 	{

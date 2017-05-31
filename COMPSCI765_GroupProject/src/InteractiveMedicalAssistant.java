@@ -5,10 +5,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +83,7 @@ public class InteractiveMedicalAssistant {
 			            }
 			            IC.setKnowledge(data);
 			            bf.close();
+			            read.close();
    
 			            try
 			            {
@@ -153,6 +158,29 @@ public class InteractiveMedicalAssistant {
 		frmCompsciInteractiveMedical.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCompsciInteractiveMedical.getContentPane().setLayout(null);
 		
+		try{
+
+			InputStream input = this.getClass().getResourceAsStream("/kbs/CLIPSJNI.dll");
+
+			String current = new java.io.File( "." ).getCanonicalPath();
+			IC.setPath(current);
+	
+			FileOutputStream out = new FileOutputStream(current+"\\CLIPSJNI.dll");
+
+    	    byte[] buf = new byte[2048];
+    	    int r;
+    	    while(-1 != (r = input.read(buf))) {
+    	        out.write(buf, 0, r);
+    	    }
+    	    
+    	    input.close();
+    	    out.close();
+
+		}catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		
 		// IC state is init
 		textArea.setText(IC.interactive_action(""));
 		
@@ -167,6 +195,7 @@ public class InteractiveMedicalAssistant {
 				knowledge.add(line);
 			 }
 			IC.setKnowledge(knowledge);
+			in.close();
 			reader.close();
 		}catch (IOException e1) {
 			e1.printStackTrace();

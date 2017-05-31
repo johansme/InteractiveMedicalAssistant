@@ -14,9 +14,11 @@ public class InteractiveController {
 	
 	private String state;
 	private List<String> knowledge;
+	private String path;
 	
 	//Model of user
 	
+
 	private int age;
 	private String gender;
 	private String diagnose;
@@ -33,6 +35,12 @@ public class InteractiveController {
 		this.has_symptom = new ArrayList<String>();
 		this.has_not_symptom = new ArrayList<String>();
 		this.symptom_add_remove = "";
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	public String getSymptom_add_remove() {
 		return symptom_add_remove;
@@ -305,15 +313,23 @@ public class InteractiveController {
 	}
 	public String clips_interface()
 	{
-		//CLIPSJNI.dll must be in system32 or OS equivalent
-		Environment clips = new Environment();
-		clips.loadFromResource("/kbs/kbs.clp");
-		clips.run();
-		clips.eval("(facts)");
-        //clips.reset();
-		//clips.run();
-		//clips.destroy();
-        //clips.eval();
+		try{
+			//CLIPSJNI.dll must be in system32 or OS equivalent
+			Environment clips = new Environment();
+			clips.loadFromResource("/kbs/kbs.clp");
+			clips.run();
+			clips.eval("(facts)");
+	        //clips.reset();
+			//clips.run();
+			//clips.destroy();
+	        //clips.eval();
+			
+		}
+		catch(Exception e)
+		{
+			
+			//System.out.println("?"+e.toString());
+		}
 		return " ";
 	}
 }

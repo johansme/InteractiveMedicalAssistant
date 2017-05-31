@@ -20,9 +20,10 @@ public class Environment
    public static final String GLOBALS = "globals";
    public static final String MESSAGES = "messages";
    public static final String MESSAGE_HANDLERS = "message-handlers";
+   public static String path = "";
 
    static { System.loadLibrary("CLIPSJNI"); }
-
+   
    private long theEnvironment;
 
    /****************/

@@ -98,6 +98,8 @@ public class InteractiveMedicalAssistant {
 				            {
 				            	name = temp.substring(0, temp.indexOf(":"));
 				            	
+				            	name = name.replace(" ", "-");
+				            	
 				            	clips_rule="(defrule "+name+" \n";
 				            	clips_rule+="(disease-is "+name+")\n";
 				            	clips_rule+="=>\n";
@@ -117,6 +119,7 @@ public class InteractiveMedicalAssistant {
 				            	symptoms=symptoms.replaceAll(":", "\" \"");
 				            	clips_rule+="(printout t "+symptoms+" crlf))\n";
 					            writer.println(clips_rule);
+
 				            	clips_rule="";
 				            	symptoms="";
 				            	name="";
@@ -237,6 +240,7 @@ public class InteractiveMedicalAssistant {
 				}
 				else// keep asking till yes or no
 				{
+					textField.setText("");
 					JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
 				}
 			}

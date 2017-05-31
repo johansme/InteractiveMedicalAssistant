@@ -307,7 +307,7 @@ public class InteractiveController {
 		{
 			this.state = "yes/no";
 			this.symptom_add_remove = max_symptom;
-			return "Are you experiencing the following symptom: " + max_symptom + "? Please use yes or no";
+			return "Are you experiencing the following symptom: " + max_symptom + "?";
 		}
 		else
 		{
@@ -322,6 +322,7 @@ public class InteractiveController {
 			clips.loadFromResource("/kbs/kbs.clp");
 			clips.run();
 			clips.eval("(facts)");
+			clips.eval("(rules)");
 	        //clips.reset();
 			//clips.run();
 			//clips.destroy();

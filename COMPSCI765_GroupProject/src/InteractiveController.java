@@ -210,7 +210,9 @@ public class InteractiveController {
 			
 			String disease_name="";
 			disease_name = disease_line.substring(0,disease_line.indexOf(":"));
-			String symptom_line = disease_line.substring(disease_line.indexOf(":"),disease_line.length());
+			String symptom_line = disease_line.substring(disease_line.indexOf(":")+1,disease_line.length());
+			
+			String [] total_symptoms = symptom_line.split(":");
 			
 			int symptom_hits = 0;
 			for(String has_symptom : this.has_symptom)
@@ -220,7 +222,8 @@ public class InteractiveController {
 					symptom_hits++;
 				}
 			}
-			if(this.has_symptom.size()==symptom_hits)
+
+			if(this.has_symptom.size()==total_symptoms.length)
 			{
 				this.state = "advise"; //found match
 				return "Possible : "+disease_name;

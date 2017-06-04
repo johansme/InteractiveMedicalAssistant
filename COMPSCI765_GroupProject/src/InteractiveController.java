@@ -1,12 +1,6 @@
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-
-import javax.swing.JOptionPane;
-
 import net.sf.clipsrules.jni.*;
 
 public class InteractiveController {
@@ -24,6 +18,7 @@ public class InteractiveController {
 	private String diagnose;
 	private List<String> has_symptom;
 	private List<String> has_not_symptom;
+	private List<String> hypothesis;
 	private String symptom_add_remove;
 	
 	public InteractiveController()
@@ -34,7 +29,14 @@ public class InteractiveController {
 		this.diagnose = "";
 		this.has_symptom = new ArrayList<String>();
 		this.has_not_symptom = new ArrayList<String>();
+		this.hypothesis = new ArrayList<String>();
 		this.symptom_add_remove = "";
+	}
+	public List<String> getHypothesis() {
+		return hypothesis;
+	}
+	public void setHypothesis(List<String> hypothesis) {
+		this.hypothesis = hypothesis;
 	}
 	public String getPath() {
 		return path;
@@ -195,6 +197,12 @@ public class InteractiveController {
 		}
 		//****************CLEAR*****************//
 
+		//****************Update****************//
+		this.hypothesis.clear();
+		this.hypothesis = disease;
+		//****************Update****************//
+		
+		
 		//****************CHECK****************//
 
 		if(disease.size()==1) // match on single

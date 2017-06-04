@@ -304,6 +304,7 @@ public class InteractiveMedicalAssistant {
 							else// keep asking till yes or no
 							{
 								JOptionPane.showMessageDialog(frmCompsciInteractiveMedical, "Please use yes or no");
+								textField.setText("");
 							}
 					   }					  
 				  }				
@@ -733,5 +734,48 @@ public class InteractiveMedicalAssistant {
 		});
 		btnNewButton_2.setBounds(540, 292, 89, 23);
 		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Model");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String hypotheses = "";
+				for(String hypothesis : IC.getHypothesis())
+				{
+					hypotheses += hypothesis + "\n";
+				}
+				
+				String has_symptom = "";
+				for(String has_s : IC.getHas_symptom())
+				{
+					has_symptom += has_s + "\n";
+				}
+				
+				String has_not_symptom = "";
+				for(String has_not_s : IC.getHas_not_symptom())
+				{
+					has_not_symptom += has_not_s + "\n";
+				}
+				
+				JTextArea textArea = new JTextArea(
+						"Hypotheses:\n\n"+
+						 hypotheses +
+					     "\n"+
+						"Has Symptoms:\n\n"+
+					     has_symptom +
+					     "\n"+
+						"Has not Symptoms:\n\n"+
+					     has_not_symptom +
+					     "\n"
+				);
+		JScrollPane scrollPane = new JScrollPane(textArea);  
+		textArea.setLineWrap(false);  
+		textArea.setWrapStyleWord(true); 
+		scrollPane.setPreferredSize(new Dimension(200,500));
+		JOptionPane.showMessageDialog(null, scrollPane, "The Current Model", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
+		btnNewButton_3.setBounds(598, 250, 89, 23);
+		frmCompsciInteractiveMedical.getContentPane().add(btnNewButton_3);
 	}
 }

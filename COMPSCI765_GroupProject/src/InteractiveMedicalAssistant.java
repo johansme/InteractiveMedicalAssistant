@@ -215,9 +215,28 @@ public class InteractiveMedicalAssistant {
 				
 			if(IC.getState().equals("yes"))
 			{
-				IC.setSymptom_add_remove(textField.getText());
-				textArea.setText(IC.interactive_action(textField.getText()));
-				textField.setText("");					
+				if(collect)
+				{
+					IC.getHas_symptom().add(textField.getText());
+					
+					int reply = JOptionPane.showConfirmDialog(null, "Would you like to give more symptoms ?", "More Symptoms ?", JOptionPane.YES_NO_OPTION);
+					
+			        if (reply == JOptionPane.YES_OPTION) {
+			        	collect = true;
+			        	textField.setText("");
+			        }
+			        else {
+			        	collect=false;
+			        	textArea.setText(IC.interactive_action(textField.getText()));
+						textField.setText("");
+			        }
+				}
+				else
+				{								
+					IC.setSymptom_add_remove(textField.getText());
+					textArea.setText(IC.interactive_action(textField.getText()));
+					textField.setText("");								
+				}
 			}
 			else if(IC.getState().equals("advise"))
 			{
@@ -296,8 +315,7 @@ public class InteractiveMedicalAssistant {
 							{								
 								IC.setSymptom_add_remove(textField.getText());
 								textArea.setText(IC.interactive_action(textField.getText()));
-								textField.setText("");
-								
+								textField.setText("");								
 							}
 						}
 						else if(IC.getState().equals("advise"))
